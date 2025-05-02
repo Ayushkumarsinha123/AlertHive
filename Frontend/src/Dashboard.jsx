@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Sidebar from "./components/Sidebar";
+import Topbar from "./components/Topbar"; // ✅ Import Topbar
 import BentoGrid from "./layouts/bentoGrid.jsx";
 import { Menu } from "lucide-react";
 
@@ -34,14 +35,18 @@ const Dashboard = () => {
           isSidebarOpen ? "ml-64" : "ml-0"
         }`}
       >
+        {/* ✅ Topbar */}
+        <Topbar />
+
+        {/* ✅ Bento Grid Content */}
         <BentoGrid>
           <IncomeTrackerCard />
           <RecentProjectsCard />
           <ProposalProgressCard />
           <PremiumFeaturesCard />
         </BentoGrid>
-       </main>
-     </div>
+      </main>
+    </div>
   );
 };
 
