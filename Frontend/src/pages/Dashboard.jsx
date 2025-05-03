@@ -1,13 +1,13 @@
 import React, { useState } from "react";
-import Sidebar from "./components/Sidebar";
-import Topbar from "./components/Topbar"; // ✅ Import Topbar
-import BentoGrid from "./layouts/bentoGrid.jsx";
+import Sidebar from "../components/Sidebar.jsx";
+import Topbar from "../components/Topbar.jsx"; // ✅ Import Topbar
+import BentoGrid from "../layouts/bentoGrid.jsx";
 import { Menu } from "lucide-react";
 
-import IncomeTrackerCard from "./components/IncomeTrackerCard";
-import RecentProjectsCard from "./components/RecentProjectsCard";
-import ProposalProgressCard from "./components/ProposalProgressCard";
-import PremiumFeaturesCard from "./components/PremiumFeaturesCard";
+import IncomeTrackerCard from "../components/IncomeTrackerCard.jsx";
+import RecentProjectsCard from "../components/RecentProjectsCard.jsx";
+import ProposalProgressCard from "../components/ProposalProgressCard.jsx";
+import PremiumFeaturesCard from "../components/PremiumFeaturesCard.jsx";
 
 const Dashboard = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
