@@ -19,37 +19,29 @@ const API_LIST = API_PATHS.map(path => `${ROOT}${path}`);
 // INTERVAL DURATION 
 const INTERVAL = process.env.SCHEDULER_DURATION
 
-setInterval(async () => {
-    await fetchAllAPI(API_LIST);
-
-    // Your logic here
-    console.log(`Calling API every ${INTERVAL} seconds`);
-
-}, INTERVAL * 1000);
-
-async function fetchAllAPI(API_LIST) {
-    const tasks = API_LIST.map(async (url) => {
-        try {
-            const response = await axios.get(url);
-            const data = response.data;
-
-            // Process each response individually and immediately
-            processResponse(data, url);
-
-            return { success: true, url };
-        } catch (err) {
-            console.error(`Error in ${url}: ${err.message}`);
-            return { success: false, url };
+function runWorker() {
+    const worker = new Worker(path.resolve(__dirname, 'worker.js'), {
+        workerData: {
+            apiList: API_LIST,
         }
     });
 
-    const results = await Promise.allSettled(tasks);
+    worker.on('message', (msg) => {
+        console.log('[Worker Message]', msg);
+    });
+
+    worker.on('error', (err) => {
+        console.error('[Worker Error]', err);
+    });
+
+    worker.on('exit', (code) => {
+        if (code !== 0)
+            console.warn(`Worker exited with code ${code}`);
+    });
+
+    // Schedule next run
+    setTimeout(runWorker, INTERVAL * 1000);
 }
 
-function processResponse(data, url) {
-    // Your per-API processing logic
-    if (data.status === 'important') {
-        console.log(`Relevant data from ${url}:`, data);
-        // Emit to frontend, store, etc.
-    }
-}
+// Start scheduler
+runWorker();
