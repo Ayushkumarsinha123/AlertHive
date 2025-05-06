@@ -53,4 +53,4 @@ function setupWebSocketServer(server) {
   });
 }
 
-module.exports = { setupWebSocketServer };
+module.exports = { setupWebSocketServer, WebSocket, getClients };
