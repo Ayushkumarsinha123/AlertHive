@@ -1,0 +1,70 @@
+{
+  "source": "news",
+  "data": {
+    "@Top_Disaster": {
+      "totalData": 10,
+      "articles": [
+        {
+          "headline": "Life-threatening, catastrophic, and potentially historic flash flooding persists in South and Midwest",
+          "content": null,
+          "link": "https://www.cnbc.com/2025/04/05/life-threatening-catastrophic-and-potentially-historic-flash-flooding-persists-in-south-and-midwest.html",
+          "time": "2025-05-06T08:15:00Z"
+        },
+        {
+          "headline": "As Trump guts foreign aid, China and others lead Myanmar earthquake response",
+          "content": null,
+          "link": "https://www.cnbc.com/2025/03/31/as-trump-guts-foreign-aid-china-and-others-lead-myanmar-earthquake-response.html",
+          "time": "2025-05-05T17:30:00Z"
+        },
+        {
+          "headline": "5.2-magnitude earthquake strikes Julian, California, in San Diego County",
+          "content": null,
+          "link": "https://www.cnbc.com/2025/04/14/5point2-magnitude-earthquake-strikes-julian-california-in-san-diego-county.html",
+          "time": "2025-05-04T14:50:00Z"
+        },
+        {
+          "headline": "South and Midwest brace for more historic rains and severe flooding in deadly multiday storm system",
+          "content":null,
+          "link": "https://www.cnbc.com/2025/04/04/south-and-midwest-brace-for-more-historic-rains-and-severe-flooding-in-deadly-multiday-storm-system.html",
+          "time": "2025-05-03T10:00:00Z"
+        },
+        {
+          "headline": "Earthquake had very little impact on Thailands fundamental industries: Stock Exchange of Thailand",
+          "content": null,
+          "link": "https://www.cnbc.com/video/2025/03/31/myanmar-earthquake-very-little-impact-on-fundamental-thai-industries-stock-exchange-of-thailand.html",
+          "time": "2025-05-02T21:15:00Z"
+        },
+        {
+          "headline": "Climate Kentucky faces devastating flooding with 8 dead and more than a thousand rescued",
+          "content": null,
+          "link": "https://www.cnbc.com/2025/02/15/blizzard-in-the-north-and-floods-in-the-south-while-severe-storms-batter-eastern-us.html",
+          "time": "2025-05-01T09:45:00Z"
+        },
+        {
+          "headline": "Rare cyclone could cause billions of dollars worth of damage to Australia east",
+          "content": null,
+          "link": "https://www.cnbc.com/video/2025/03/07/rare-cyclone-could-cause-billions-of-dollars-worth-of-damage-to-australias-east.html",
+          "time": "2025-04-30T11:00:00Z"
+        },
+        {
+          "headline": "Bangkok declares disaster zone at least 144 reported dead in Myanmar after earthquake ",
+          "content":null,
+          "link": "https://www.cnbc.com/2025/03/28/myanmar-earthquake-bangkok-declares-disaster-zone-buildings-evacuated.html",
+          "time": "2025-04-29T06:30:00Z"
+        },
+        {
+          "headline": "Huge erupt at Poás Volcano in Alajuela Province, Costa Rica",
+          "content": null,
+          "link": "https://x.com/Top_Disaster/status/1914496524219822487",
+          "time": "2025-04-28T15:40:00Z"
+        },
+        {
+          "headline": "A major fire broken out at residential building in Surat in the state of Gujarat, India ",
+          "content": null,
+          "link": "https://x.com/Top_Disaster/status/1910657896615944262",
+          "time": "2025-04-27T13:00:00Z"
+        }
+      ]
+    }
+  }
+}
