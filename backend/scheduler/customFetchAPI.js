@@ -1,7 +1,9 @@
 const { Worker } = require('worker_threads');
 const dotenv = require("dotenv");
 const path = require("path")
-const axios = require("axios")
+
+const { WebSocket, getClients } = require("./../ws/server")
+const { broadcastToClients } = require("./../ws/utils/broadcast")
 
 dotenv.config({ path: path.resolve(__dirname, '../config.env') });
 
@@ -14,9 +16,11 @@ const SOURCE_X = 'x';
 // MOCK APIs FROM WHERE DATA NEEDS TO BE EXTRACTED
 const ROOT = 'http://localhost:6010';
 
-const API_PATHS = [
-    `/api/test/xposts-mock?source=${SOURCE_X}&limit=${DATA_LIMIT}`,
-];
+// const API_PATHS = [
+//     `/api/test/xposts-mock?source=${SOURCE_X}&limit=${DATA_LIMIT}`,
+// ];
+
+const API_PATHS = ['/api/test?source=x']
 
 // Full URLs using ROOT
 const API_LIST = API_PATHS.map(path => `${ROOT}${path}`);
@@ -33,6 +37,13 @@ function runWorker() {
 
     worker.on('message', (msg) => {
         console.log('[Worker Message]', msg);
+
+        if (msg.event === 'DATA_FROM_WORKER') {
+            // Get list of connected clients
+            const clients = getClients()
+
+            broadcastToClients(clients, WebSocket, msg.data);
+        }
     });
 
     worker.on('error', (err) => {
@@ -48,5 +59,4 @@ function runWorker() {
     setTimeout(runWorker, INTERVAL * 1000);
 }
 
-// Start scheduler
-runWorker();
+module.exports = runWorker;
