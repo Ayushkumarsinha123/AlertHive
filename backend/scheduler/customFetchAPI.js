@@ -5,12 +5,17 @@ const axios = require("axios")
 
 dotenv.config({ path: path.resolve(__dirname, '../config.env') });
 
+// CHANGE this value as per DATA need
+const DATA_LIMIT = 1;
+
+// SOURCE
+const SOURCE_X = 'x';
+
 // MOCK APIs FROM WHERE DATA NEEDS TO BE EXTRACTED
 const ROOT = 'http://localhost:6010';
 
 const API_PATHS = [
-    '/api/test',
-    '/api/test/yoho',
+    `/api/test/xposts-mock?source=${SOURCE_X}&limit=${DATA_LIMIT}`,
 ];
 
 // Full URLs using ROOT
