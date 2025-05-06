@@ -1,0 +1,70 @@
+{
+  "source": "x",
+  "data": {
+    "@Top_Disaster": {
+      "totalData": 10,
+      "articles": [
+        {
+          "headline": "Heavy rainfall accompanied by massive hails fall in Dimona, Israel 🇮🇱",
+          "content": "Several areas in Mumbai including Andheri and Dadar witnessed severe waterlogging due to continuous rainfall for 12 hours.",
+          "link": "https://x.com/Top_Disaster/status/1919064630862729482",
+          "time": "2025-05-06T08:15:00Z"
+        },
+        {
+          "headline": "A huge hailstorm hits in the Paris, France 🇫🇷 (03.05.2025)",
+          "content": "A large tree collapsed near CST station disrupting traffic; no injuries reported.",
+          "link": "https://x.com/Top_Disaster/status/1918706481903345925",
+          "time": "2025-05-05T17:30:00Z"
+        },
+        {
+          "headline": "Severe flooding occurred due to heavy rainfall in Santo Amaro of Bahia, Brazil 🇧🇷 (03.05.2025)",
+          "content": "A minor fire broke out at a transformer in Sion area causing temporary power outage. Firefighters controlled the situation promptly.",
+          "link": "https://x.com/Top_Disaster/status/1918685003078042037",
+          "time": "2025-05-04T14:50:00Z"
+        },
+        {
+          "headline": "Severe flood occurred due to torrential rainfall on the road in Tibungco of Davao City, Philippines 🇵🇭 (02.05.2025)",
+          "content": "IMD has issued a yellow alert for possible cyclone impact along Mumbai coastline. Citizens advised to stay indoors.",
+          "link": "https://x.com/Top_Disaster/status/1918388356095807625",
+          "time": "2025-05-03T10:00:00Z"
+        },
+        {
+          "headline": "A huge dust storm is affecting in Shivta of Negev region, Israel 🇮🇱 (30.04.2025)",
+          "content": "Fire services responded to a level 1 fire in a Kurla apartment. All residents were safely evacuated.",
+          "link": "https://x.com/Top_Disaster/status/1917649104798376063",
+          "time": "2025-05-02T21:15:00Z"
+        },
+        {
+          "headline": "Massive forest fire broke out in Judean Foothills, Israel",
+          "content": "Due to a pump failure, tanker water supply in Kandivali and Borivali areas is delayed. Restoration expected by evening.",
+          "link": "https://x.com/Top_Disaster/status/1917546945029234814  ",
+          "time": "2025-05-01T09:45:00Z"
+        },
+        {
+          "headline": "Terrible floods due to extreme rainfall in Lawton of Oklahoma, United States ",
+          "content": "A small landslide affected one lane near Vikhroli. Civic teams cleared debris within 2 hours.",
+          "link": "https://x.com/Top_Disaster/status/1916212735378874778",
+          "time": "2025-04-30T11:00:00Z"
+        },
+        {
+          "headline": "Massive forest fire has broken out in the Dirang town of Arunachal Pradesh, India ",
+          "content": "Due to high tide alert, BMC has closed Juhu and Girgaum beaches until 6 PM today.",
+          "link": "https://x.com/Top_Disaster/status/1915464446421463460",
+          "time": "2025-04-29T06:30:00Z"
+        },
+        {
+          "headline": "Huge erupt at Poás Volcano in Alajuela Province, Costa Rica",
+          "content": "Smoke was observed from the Deonar site. Fire brigade was alerted and controlled the blaze within hours.",
+          "link": "https://x.com/Top_Disaster/status/1914496524219822487",
+          "time": "2025-04-28T15:40:00Z"
+        },
+        {
+          "headline": "A major fire broken out at residential building in Surat in the state of Gujarat, India ",
+          "content": "A small road cave-in occurred near Pant Nagar due to drainage issues. No injuries reported. Area cordoned off.",
+          "link": "https://x.com/Top_Disaster/status/1910657896615944262",
+          "time": "2025-04-27T13:00:00Z"
+        }
+      ]
+    }
+  }
+}
