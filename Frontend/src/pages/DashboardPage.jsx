@@ -18,7 +18,7 @@ export default function Dashboard() {
             {/* LEFT COLUMN */}
             <div className="col-span-12 md:col-span-6 h-full flex flex-col gap-4">
               <div className="flex-grow basis-[70%]">
-                <Card title="Left Section Card">
+                <Card title="">
                   This card takes up 70% height.
                 </Card>
               </div>
