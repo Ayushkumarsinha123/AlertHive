@@ -32,8 +32,7 @@ export default function Dashboard() {
             {/* RIGHT COLUMN */}
             <div className="col-span-12 md:col-span-6 h-full flex flex-col gap-4">
               <div className="flex-grow basis-[70%]">
-                <Card3 title="Right Section Card">
-                  This card takes up 70% height.
+                <Card3 title="Live Feed">
                 </Card3>
               </div>
               <div className="flex-grow basis-[30%]">
