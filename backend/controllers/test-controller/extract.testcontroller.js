@@ -20,6 +20,8 @@ exports.getSource = async (req, res, next) => {
 
     req.__SOURCE = SOURCE;
 
+    delete req.query.source;
+
     next()
 }
 
