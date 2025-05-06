@@ -16,7 +16,7 @@ const sourceIcons = {
 
 export default function Card3({ title }) {
   return (
-    <div className="bg-slate-50 rounded-xl p-4 shadow-sm h-full flex flex-col">
+    <div className="">
       {title && (
         <h2 className="text-md font-semibold text-gray-800 mb-2">{title}</h2>
       )}
