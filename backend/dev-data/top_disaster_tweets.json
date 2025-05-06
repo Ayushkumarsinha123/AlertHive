@@ -1,0 +1,75 @@
+{
+    "username": "Top_Disaster",
+    "tweets": [
+        {
+            "id": "1918706481903345925",
+            "text": "A huge hailstorm hits in the Paris, France 🇫🇷 (03.05.2025)\n\nhttps://t.co/cqYBcSx9qb",
+            "created_at": "2025-05-03T16:37:27.000Z",
+            "likes": 225,
+            "retweets": 80
+        },
+        {
+            "id": "1918701810950303914",
+            "text": "Massive hailstorm in the Paris, France 🇫🇷\n\nhttps://t.co/bu8uF4Pc0X",
+            "created_at": "2025-05-03T16:18:54.000Z",
+            "likes": 430,
+            "retweets": 164
+        },
+        {
+            "id": "1918685003078042037",
+            "text": "Severe flooding occurred due to heavy rainfall in Santo Amaro of Bahia, Brazil 🇧🇷 (03.05.2025) https://t.co/jAC0yH0u6H",
+            "created_at": "2025-05-03T15:12:06.000Z",
+            "likes": 56,
+            "retweets": 17
+        },
+        {
+            "id": "1918388356095807625",
+            "text": "Severe flood occurred due to torrential rainfall on the road in Tibungco of Davao City, Philippines 🇵🇭 (02.05.2025) https://t.co/PnxSgTM5oP",
+            "created_at": "2025-05-02T19:33:20.000Z",
+            "likes": 241,
+            "retweets": 117
+        },
+        {
+            "id": "1918297498524749873",
+            "text": "Heavy rains accompanied by massive hails fall in Piedrabuena of Castile-La Mancha, Spain 🇪🇸 (02.05.2025) https://t.co/6CpXJud3hd",
+            "created_at": "2025-05-02T13:32:18.000Z",
+            "likes": 294,
+            "retweets": 137
+        },
+        {
+            "id": "1918155306644684865",
+            "text": "Massive floods in Gaspar Hernández of Espaillat province, Dominican Republic 🇩🇴 (01.05.2025) https://t.co/1ITYhAzMg6",
+            "created_at": "2025-05-02T04:07:17.000Z",
+            "likes": 332,
+            "retweets": 180
+        },
+        {
+            "id": "1917985218226540559",
+            "text": "Heavy rains accompanied by hails fall in Zagora of Drâa-Tafilalet region, Morocco 🇲🇦 (01.05.2025) https://t.co/GJBFVUc6zr",
+            "created_at": "2025-05-01T16:51:25.000Z",
+            "likes": 317,
+            "retweets": 146
+        },
+        {
+            "id": "1917649104798376063",
+            "text": "A huge dust storm is affecting in Shivta of Negev region, Israel 🇮🇱 (30.04.2025)\nhttps://t.co/d2v5aBrxWq",
+            "created_at": "2025-04-30T18:35:49.000Z",
+            "likes": 295,
+            "retweets": 135
+        },
+        {
+            "id": "1917546945029234814",
+            "text": "Massive forest fire broke out in Judean Foothills, Israel 🇮🇱 (30.04.2025) https://t.co/HJXuXVF839",
+            "created_at": "2025-04-30T11:49:52.000Z",
+            "likes": 502,
+            "retweets": 237
+        },
+        {
+            "id": "1917159789513101724",
+            "text": "Massive floods due to intense rainfall in Mae Sai District of Chiang Rai province, Thailand 🇹🇭 (29.04.2025) https://t.co/cscOWKOWlS",
+            "created_at": "2025-04-29T10:11:27.000Z",
+            "likes": 281,
+            "retweets": 124
+        }
+    ]
+}
