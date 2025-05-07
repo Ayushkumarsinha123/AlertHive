@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { Newspaper, Twitter, Instagram } from "lucide-react";
 import { useWebSocket } from '../contexts/WebSocketContext';
+import { Button } from '@headlessui/react';
+import AdminButton from './InsightButton';
 
 // Utility function to get a random source
 function getRandomSource() {
@@ -81,6 +83,9 @@ export default function Card3({ title, onProgress }) {
           >
             {sourceIcons[item.source]}
             <span className="text-sm text-gray-700">{item.title}</span>
+            <div className="w-full flex justify-end">
+  <AdminButton />
+</div>
           </a>
         ))}
       </div>
