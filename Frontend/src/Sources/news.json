@@ -1,7 +1,7 @@
 {
   "source": "news",
   "data": {
-    "@Top_Disaster": {
+    "cnbc": {
       "totalData": 10,
       "articles": [
         {

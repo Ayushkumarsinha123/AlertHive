@@ -23,10 +23,20 @@ export default function Dashboard() {
                 </Card>
               </div>
               <div className="flex-grow basis-[30%]">
-                <Card2 title="Lower Left Card">
-                  This card takes up 30% height.
-                </Card2>
-              </div>
+  <Card2 title="Disaster Summary">
+    <div className="space-y-2">
+      <div className="bg-red-100 text-red-700 px-3 py-2 rounded-lg shadow-sm">
+        <h3 className="text-sm font-semibold">Deaths</h3>
+        <p className="text-lg font-bold">132</p>
+      </div>
+      <div className="bg-yellow-100 text-yellow-800 px-3 py-2 rounded-lg shadow-sm">
+        <h3 className="text-sm font-semibold">Injuries</h3>
+        <p className="text-lg font-bold">289</p>
+      </div>
+    </div>
+  </Card2>
+</div>
+
             </div>
 
             {/* RIGHT COLUMN */}
@@ -36,10 +46,24 @@ export default function Dashboard() {
                 </Card3>
               </div>
               <div className="flex-grow basis-[30%]">
-                <Card4 title="Lower Right Card">
-                  This card takes up 30% height.
-                </Card4>
-              </div>
+  <Card4 title="Critical News">
+    <div className="space-y-3">
+      <div className="bg-red-200 text-red-900 px-3 py-2 rounded-lg shadow-sm">
+        <h3 className="text-sm font-semibold">Climate Alert</h3>
+        <p className="text-sm">
+          Kentucky faces devastating flooding with <span className="font-bold">8 dead</span> and more than a <span className="font-bold">thousand rescued</span>.
+        </p>
+      </div>
+      <div className="bg-red-200 text-red-900 px-3 py-2 rounded-lg shadow-sm">
+        <h3 className="text-sm font-semibold">Fire Emergency</h3>
+        <p className="text-sm">
+          Massive forest fire broke out in <span className="font-bold">Judean Foothills, Israel</span>.
+        </p>
+      </div>
+    </div>
+  </Card4>
+</div>
+
             </div>
           </div>
         </div>
