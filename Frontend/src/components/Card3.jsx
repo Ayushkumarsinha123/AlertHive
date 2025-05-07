@@ -1,4 +1,7 @@
+import { useEffect } from 'react';
 import { Newspaper, Twitter, Instagram } from "lucide-react";
+
+import { useWebSocket } from '../contexts/WebSocketContext';
 
 const dummyContent = [
   { title: "Breaking News: React 19 Released!", source: "News", link: "#" },
@@ -15,6 +18,26 @@ const sourceIcons = {
 };
 
 export default function Card3({ title }) {
+  const socket = useWebSocket()
+
+  useEffect(() => {
+    if (!socket) return;
+
+    socket.onmessage = (event) => {
+      console.log(event)
+      const data = JSON.parse(event.data);
+      if (data.eventType === "BED_REQUEST_ACK") {
+        console.log("Received BED_REQUEST_ACK:", data);
+        // You can update UI here
+      }
+    };
+
+    // Optional: cleanup
+    return () => {
+      socket.onmessage = null;
+    };
+  }, [socket]);
+
   return (
     <div className="">
       {title && (

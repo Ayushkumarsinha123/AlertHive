@@ -16,11 +16,11 @@ const SOURCE_X = 'x';
 // MOCK APIs FROM WHERE DATA NEEDS TO BE EXTRACTED
 const ROOT = 'http://localhost:6010';
 
-// const API_PATHS = [
-//     `/api/test/xposts-mock?source=${SOURCE_X}&limit=${DATA_LIMIT}`,
-// ];
+const API_PATHS = [
+    `/api/test/xposts-mock?source=${SOURCE_X}&limit=${DATA_LIMIT}`,
+];
 
-const API_PATHS = ['/api/test?source=x']
+// const API_PATHS = ['/api/test?source=x']
 
 // Full URLs using ROOT
 const API_LIST = API_PATHS.map(path => `${ROOT}${path}`);
@@ -42,7 +42,14 @@ function runWorker() {
             // Get list of connected clients
             const clients = getClients()
 
-            broadcastToClients(clients, WebSocket, msg.data);
+            const PAYLOAD = {
+                event: 'X_NEWS',
+                data: msg.data
+            }
+
+            console.log(PAYLOAD)
+
+            broadcastToClients(clients, WebSocket, PAYLOAD);
         }
     });
 
