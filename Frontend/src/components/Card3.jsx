@@ -16,7 +16,7 @@ const sourceIcons = {
   Instagram: <Instagram className="w-4 h-4 text-pink-500" />,
 };
 
-export default function Card3({ title, onProgress }) {
+export default function Card3({ title, onProgress, onNewItem }) {
   const socket = useWebSocket();
   const [content, setContent] = useState([
     { id: 1, title: "Breaking News: React 19 Released!", source: "News", link: "#" },
@@ -41,14 +41,17 @@ export default function Card3({ title, onProgress }) {
       if (data.event === "X_NEWS") {
         const newItem = {
           id: idCounter,
-          title: data.data.data.DATA[0].title || "Untitled",
-          source: data.data.data.DATA[0].source || getRandomSource(),
-          link: data.data.data.DATA[0].link || "#",
+          title: data.data.title || "Untitled",
+          source: data.data.source || getRandomSource(),
+          link: data.data.link || "#",
+          casualties: data.data.casualties || { injuries: 0, death: 0 }
         };
 
         setContent(prev => [newItem, ...prev.slice(0, prev.length - 1)]);
         setHighlightedId(idCounter);
         setIdCounter(prev => prev + 1);
+
+        onNewItem?.(newItem);
 
         onProgress?.(2); // Step 3: Displayed
 
@@ -64,7 +67,7 @@ export default function Card3({ title, onProgress }) {
         socket.onmessage = null;
       };
     };
-  }, [socket, idCounter, onProgress]);
+  }, [socket, idCounter, onProgress, onNewItem]);
 
   return (
     <div>
