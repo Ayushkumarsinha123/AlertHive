@@ -7,8 +7,8 @@ import { SpiderChart } from "../components/SpiderChart";
 
 export default function InsightsDashboard() {
   const [dateRange, setDateRange] = useState("Custom Date");
-  const [location, setLocation] = useState("Burger House");
-  const [country, setCountry] = useState("Country");
+  const [location, setLocation] = useState("Uttarakhand");
+  const [country, setCountry] = useState("India");
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-400 to-cyan-500 p-6">
@@ -22,14 +22,14 @@ export default function InsightsDashboard() {
             setSelected={setDateRange}
           />
           <FilterOption
-            title="Burger House"
-            options={["Burger house", "Pizza Palace", "Taco Town"]}
+            title="district"
+            options={["Dehradun", "Haridwar", "Chamoli"]}
             selected={location}
             setSelected={setLocation}
           />
           <FilterOption
-            title="Country"
-            options={["USA", "Spain", "India"]}
+            title="State"
+            options={["Patna", "UP", "Uttarakhand"]}
             selected={country}
             setSelected={setCountry}
           />
@@ -45,18 +45,31 @@ export default function InsightsDashboard() {
 
         {/* Map Section */}
         <MapSection />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-10">
+  <CardInsights title="Disaster Summary" location="Uttarakhand">
+    <div className="space-y-2 text-sm text-gray-700">
+      <p><strong>Deaths:</strong> 8</p>
+      <p><strong>Injured:</strong> 35+</p>
+      <p><strong>Rescued:</strong> 1000+</p>
+      <p><strong>Estimated Damage:</strong> $234,730</p>
+    </div>
+  </CardInsights>
 
-        {/* Bottom Cards & Spider Chart */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-10">
-          {/* Left Card */}
-          <CardInsights title={location} location="California" amount="$234,730" />
+  <CardInsights title="Climate Alerts" location="Israel & Kentucky">
+    <div className="space-y-3">
+      <div className="bg-red-200 text-red-900 px-3 py-2 rounded-lg shadow-sm text-sm">
+        <p className="font-semibold">Flood Alert</p>
+        <p>Kentucky flooding: 8 dead, 1000+ rescued.</p>
+      </div>
+      <div className="bg-red-200 text-red-900 px-3 py-2 rounded-lg shadow-sm text-sm">
+        <p className="font-semibold">Fire Emergency</p>
+        <p>Forest fire in Judean Foothills, Israel.</p>
+      </div>
+    </div>
+  </CardInsights>
+</div>
 
-          {/* Center Spider Chart */}
-          <SpiderChart />
 
-          {/* Right Card */}
-          <CardInsights title={location} location="Barcelona" amount="$344,560" />
-        </div>
       </div>
     </div>
   );
