@@ -16,16 +16,16 @@ const sourceIcons = {
 
 export default function Card3({ title }) {
   return (
-    <div className="bg-slate-50 rounded-xl p-4 shadow-sm h-full flex flex-col">
+    <div className="">
       {title && (
         <h2 className="text-md font-semibold text-gray-800 mb-2">{title}</h2>
       )}
-      <div className="flex-grow space-y-3 overflow-y-auto pr-1">
+      <div className="flex-grow space-y-3 overflow-y-auto pr-1 ">
         {dummyContent.map((item, idx) => (
           <a
             key={idx}
             href={item.link}
-            className="flex items-center gap-2 bg-white rounded-lg p-2 hover:shadow transition duration-200"
+            className="flex items-center gap-2 bg-white rounded-lg p-2 hover:shadow transition duration-200 border border-[#ddd]"
           >
             {sourceIcons[item.source]}
             <span className="text-sm text-gray-700">{item.title}</span>
