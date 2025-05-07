@@ -14,7 +14,7 @@ const sourceIcons = {
   Instagram: <Instagram className="w-4 h-4 text-pink-500" />,
 };
 
-export default function Card3({ title }) {
+export default function Card3({ title, onProgress }) {
   const socket = useWebSocket();
   const [content, setContent] = useState([
     { id: 1, title: "Breaking News: React 19 Released!", source: "News", link: "#" },
@@ -31,7 +31,10 @@ export default function Card3({ title }) {
     if (!socket) return;
 
     socket.onmessage = (event) => {
+      onProgress?.(0); // Step 1: Fetching
       const data = JSON.parse(event.data);
+
+      onProgress?.(1); // Step 2: Fetched
 
       if (data.event === "X_NEWS") {
         const newItem = {
@@ -45,17 +48,21 @@ export default function Card3({ title }) {
         setHighlightedId(idCounter);
         setIdCounter(prev => prev + 1);
 
+        onProgress?.(2); // Step 3: Displayed
+
         // Remove highlight after 2s
         setTimeout(() => {
           setHighlightedId(null);
+
+          onProgress?.(0); // 🔁 Reset
         }, 2000);
       }
-    };
 
-    return () => {
-      socket.onmessage = null;
+      return () => {
+        socket.onmessage = null;
+      };
     };
-  }, [socket, idCounter]);
+  }, [socket, idCounter, onProgress]);
 
   return (
     <div>
