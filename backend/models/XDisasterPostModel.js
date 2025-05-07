@@ -37,6 +37,13 @@ XPostSchema.pre(/^find/, function (next) {
     next()
 })
 
+XPostSchema.virtual('casualties').get(function () {
+    // Generates random numbers between 0–10
+    const injuries = Math.floor(Math.random() * 11);
+    const death = Math.floor(Math.random() * 6);
+    return { injuries, death };
+});
+
 const XPost = mongoose.model("XPost", XPostSchema);
 
 module.exports = XPost;
