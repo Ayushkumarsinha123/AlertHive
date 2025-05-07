@@ -9,6 +9,7 @@ import Card4 from '../components/Card4';
 
 export default function Dashboard() {
   const [progressStep, setProgressStep] = useState(0);
+  const [latestItem, setLatestItem] = useState(null);
 
   return (
     <div className="min-h-screen bg-gray-500 p-4">
@@ -30,13 +31,17 @@ export default function Dashboard() {
               <div className="flex-grow basis-[30%]">
                 <Card2 title="Disaster Summary">
                   <div className="space-y-2">
-                    <div className="bg-red-100 text-red-700 px-3 py-2 rounded-lg shadow-sm">
-                      <h3 className="text-sm font-semibold">Deaths</h3>
-                      <p className="text-lg font-bold">132</p>
+                    <div className="bg-red-100 text-red-700 px-3 py-2 rounded-lg">
+                      <h3 className="text-sm font-semibold">DEATHS</h3>
+                      <p className="text-lg font-bold">
+                        {latestItem?.casualties?.death ?? 0}
+                      </p>
                     </div>
-                    <div className="bg-yellow-100 text-yellow-800 px-3 py-2 rounded-lg shadow-sm">
-                      <h3 className="text-sm font-semibold">Injuries</h3>
-                      <p className="text-lg font-bold">289</p>
+                    <div className="bg-yellow-100 text-yellow-800 px-3 py-2 rounded-lg">
+                      <h3 className="text-sm font-semibold">INJURIES</h3>
+                      <p className="text-lg font-bold">
+                        {latestItem?.casualties?.injuries ?? 0}
+                      </p>
                     </div>
                   </div>
                 </Card2>
@@ -47,7 +52,7 @@ export default function Dashboard() {
             {/* RIGHT COLUMN */}
             <div className="col-span-12 md:col-span-6 h-full flex flex-col gap-4">
               <div className="flex-grow basis-[70%]">
-                <Card3 title="Live Feed" onProgress={setProgressStep}>
+                <Card3 title="Live Feed" onProgress={setProgressStep} onNewItem={setLatestItem}>
                 </Card3>
               </div>
               <div className="flex-grow basis-[30%]">
