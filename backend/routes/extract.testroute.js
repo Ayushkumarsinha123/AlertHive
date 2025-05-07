@@ -13,6 +13,10 @@ router
     .get(extractTestController.getSource, extractTestController.getAllMockData)
 
 router
+    .route("/xposts-mock/:postId")
+    .patch(extractTestController.updateMockData)
+
+router
     .route("/xhandles-mock")
     .post(extractTestController.createMockXHandle)
 
