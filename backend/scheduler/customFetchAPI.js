@@ -17,7 +17,7 @@ const SOURCE_X = 'x';
 const ROOT = 'http://localhost:6010';
 
 const API_PATHS = [
-    `/api/test/xposts-mock?source=${SOURCE_X}&limit=${DATA_LIMIT}`,
+    `/api/test/xposts-mock?source=${SOURCE_X}`,
 ];
 
 // const API_PATHS = ['/api/test?source=x']
