@@ -52,6 +52,25 @@ exports.getAllMockData = catchAsync(async (req, res, next) => {
     });
 })
 
+exports.updateMockData = catchAsync(async (req, res, next) => {
+    const DATA = await XPost.findByIdAndUpdate(req.params.id, req.body, {
+        new: true,
+        runValidators: true,
+    });
+
+    if (!DATA) {
+        return next(new AppError("No tour found with that id", 404));
+    }
+
+    res.status(200).json({
+        status: "success",
+        data: {
+            DATA,
+        },
+    });
+});
+
+
 exports.createMockXHandle = catchAsync(async (req, res, next) => {
     const newHandle = await XHandle.create(req.body);
 
