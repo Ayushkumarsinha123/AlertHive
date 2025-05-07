@@ -7,9 +7,9 @@ import { SpiderChart } from "../components/SpiderChart";
 
 export default function InsightsDashboard() {
   const [dateRange, setDateRange] = useState("Custom Date");
-  const [location, setLocation] = useState("Uttarakhand");
-  const [country, setCountry] = useState("India");
-
+  const [location, setLocation] = useState("");
+  const [country, setCountry] = useState("");
+  
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-400 to-cyan-500 p-6">
       <div className="bg-white rounded-3xl shadow-xl px-8 py-6 max-w-7xl mx-auto">
@@ -23,18 +23,18 @@ export default function InsightsDashboard() {
           />
           <FilterOption
             title="district"
-            options={["Dehradun", "Haridwar", "Chamoli"]}
+            options={["Dehradun", "Haridwar", "Chamoli","patna", "Saharsa","Muzaffarpur"]}
             selected={location}
             setSelected={setLocation}
           />
           <FilterOption
             title="State"
-            options={["Patna", "UP", "Uttarakhand"]}
+            options={["Bihar", "UP", "Uttarakhand"]}
             selected={country}
             setSelected={setCountry}
           />
           <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 text-sm">
-            Download Report
+            Read Article
           </button>
         </div>
 
@@ -60,7 +60,7 @@ export default function InsightsDashboard() {
       <div className="bg-red-200 text-red-900 px-3 py-2 rounded-lg shadow-sm text-sm">
         <p className="font-semibold">Flood Alert</p>
         <p>Kentucky flooding: 8 dead, 1000+ rescued.</p>
-      </div>
+      </div>  
       <div className="bg-red-200 text-red-900 px-3 py-2 rounded-lg shadow-sm text-sm">
         <p className="font-semibold">Fire Emergency</p>
         <p>Forest fire in Judean Foothills, Israel.</p>
