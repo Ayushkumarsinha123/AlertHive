@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Newspaper, Twitter, Instagram } from "lucide-react";
 import { useWebSocket } from '../contexts/WebSocketContext';
-import { Button } from '@headlessui/react';
 import AdminButton from './InsightButton';
 
-// Utility function to get a random source
+// Utility to randomly assign source
 function getRandomSource() {
   const sources = ["News", "X", "Instagram"];
   return sources[Math.floor(Math.random() * sources.length)];
@@ -18,16 +17,9 @@ const sourceIcons = {
 
 export default function Card3({ title, onProgress, onNewItem }) {
   const socket = useWebSocket();
-  const [content, setContent] = useState([
-    { id: 1, title: "Breaking News: React 19 Released!", source: "News", link: "#" },
-    { id: 2, title: "10 Tips for Better UX", source: "X", link: "#" },
-    { id: 3, title: "Instagram's New Features", source: "Instagram", link: "#" },
-    { id: 4, title: "Why You Should Learn TypeScript", source: "News", link: "#" },
-    { id: 5, title: "Trending UI Designs 2025", source: "X", link: "#" },
-  ]);
-
+  const [content, setContent] = useState([]); // no initial data
   const [highlightedId, setHighlightedId] = useState(null);
-  const [idCounter, setIdCounter] = useState(6);
+  const [idCounter, setIdCounter] = useState(1);
 
   useEffect(() => {
     if (!socket) return;
@@ -35,31 +27,31 @@ export default function Card3({ title, onProgress, onNewItem }) {
     socket.onmessage = (event) => {
       onProgress?.(0); // Step 1: Fetching
       const data = JSON.parse(event.data);
-
       onProgress?.(1); // Step 2: Fetched
 
       if (data.event === "X_NEWS") {
+        const source = data.data.source || getRandomSource();
         const newItem = {
           id: idCounter,
           title: data.data.title || "Untitled",
-          source: data.data.source || getRandomSource(),
+          source,
           link: data.data.link || "#",
           casualties: data.data.casualties || { injuries: 0, death: 0 }
         };
 
-        setContent(prev => [newItem, ...prev.slice(0, prev.length - 1)]);
+        setContent(prev => {
+          const updated = [newItem, ...prev];
+          return updated.slice(0, 5); // limit to last 5
+        });
+
         setHighlightedId(idCounter);
         setIdCounter(prev => prev + 1);
-
         onNewItem?.(newItem);
-
         onProgress?.(2); // Step 3: Displayed
 
-        // Remove highlight after 2s
         setTimeout(() => {
           setHighlightedId(null);
-
-          onProgress?.(0); // 🔁 Reset
+          onProgress?.(0); // Reset
         }, 2000);
       }
 
@@ -75,22 +67,24 @@ export default function Card3({ title, onProgress, onNewItem }) {
         <h2 className="text-md font-semibold text-gray-800 mb-2">{title}</h2>
       )}
       <div className="flex-grow space-y-3 overflow-y-auto pr-1">
-        {content.map((item) => (
-          <a
-            key={item.id}
-            href={item.link}
-            className={`flex items-center gap-2 rounded-lg p-2 transition duration-500 border border-[#ddd] ${highlightedId === item.id
-              ? "bg-yellow-100 shadow-lg"
-              : "bg-white hover:shadow"
-              }`}
-          >
-            {sourceIcons[item.source]}
-            <span className="text-sm text-gray-700">{item.title}</span>
-            <div className="w-full flex justify-end">
-  <AdminButton />
-</div>
-          </a>
-        ))}
+        {content.length === 0 ? (
+          <div className="text-gray-500 text-sm italic px-2">Fetching live data...</div>
+        ) : (
+          content.map((item) => (
+            <a
+              key={item.id}
+              href='#'
+              className={`flex items-center rounded-lg p-2 transition duration-500 border border-[#ddd] ${highlightedId === item.id ? "bg-yellow-100 shadow-lg" : "bg-white hover:shadow"
+                }`}
+            >
+              {sourceIcons[item.source]}
+              <span className="text-sm text-gray-700 ml-2">{item.title}</span>
+              <div className="ml-auto">
+                <AdminButton />
+              </div>
+            </a>
+          ))
+        )}
       </div>
     </div>
   );
