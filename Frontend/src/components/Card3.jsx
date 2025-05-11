@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import { Newspaper, Twitter, Instagram } from "lucide-react";
-import { useWebSocket } from '../contexts/WebSocketContext';
-import AdminButton from './InsightButton';
+import { useWebSocket } from "../contexts/WebSocketContext";
+import AdminButton from "./InsightButton";
 
 // Utility to randomly assign source
 function getRandomSource() {
@@ -29,30 +29,34 @@ export default function Card3({ title, onProgress, onNewItem }) {
       const data = JSON.parse(event.data);
       onProgress?.(1); // Step 2: Fetched
 
-      if (data.event === "X_NEWS") {
-        const source = data.data.source || getRandomSource();
-        const newItem = {
-          id: idCounter,
-          title: data.data.title || "Untitled",
-          source,
-          link: data.data.link || "#",
-          casualties: data.data.casualties || { injuries: 0, death: 0 }
-        };
+      if (data.event === "X_NEWS" && Array.isArray(data.data)) {
+        const items = data.data.map((item) => {
+          const source = item.source || getRandomSource();
+          return {
+            id: idCounter + Math.random(), // unique-ish temp ID; consider UUID if needed
+            title: item.title || "Untitled",
+            source,
+            link: item.link || "#",
+            casualties: item.casualties || { injuries: 0, death: 0 },
+          };
+        });
 
-        setContent(prev => {
-          const updated = [newItem, ...prev];
+        setContent((prev) => {
+          const updated = [...items, ...prev];
           return updated.slice(0, 5); // limit to last 5
         });
 
-        setHighlightedId(idCounter);
-        setIdCounter(prev => prev + 1);
-        onNewItem?.(newItem);
-        onProgress?.(2); // Step 3: Displayed
+        // Highlight first item only (optional)
+        if (items.length > 0) {
+          setHighlightedId(items[0].id);
+          onNewItem?.(items[0]);
 
-        setTimeout(() => {
-          setHighlightedId(null);
-          onProgress?.(0); // Reset
-        }, 2000);
+          onProgress?.(2); // Step 3: Displayed
+          setTimeout(() => {
+            setHighlightedId(null);
+            onProgress?.(0); // Reset
+          }, 2000);
+        }
       }
 
       return () => {
@@ -68,14 +72,19 @@ export default function Card3({ title, onProgress, onNewItem }) {
       )}
       <div className="flex-grow space-y-3 overflow-y-auto pr-1">
         {content.length === 0 ? (
-          <div className="text-gray-500 text-sm italic px-2">Fetching live data...</div>
+          <div className="text-gray-500 text-sm italic px-2">
+            Fetching live data...
+          </div>
         ) : (
           content.map((item) => (
             <a
               key={item.id}
-              href='#'
-              className={`flex items-center rounded-lg p-2 transition duration-500 border border-[#ddd] ${highlightedId === item.id ? "bg-yellow-100 shadow-lg" : "bg-white hover:shadow"
-                }`}
+              href="#"
+              className={`flex items-center rounded-lg p-2 transition duration-500 border border-[#ddd] ${
+                highlightedId === item.id
+                  ? "bg-yellow-100 shadow-lg"
+                  : "bg-white hover:shadow"
+              }`}
             >
               {sourceIcons[item.source]}
               <span className="text-sm text-gray-700 ml-2">{item.title}</span>
