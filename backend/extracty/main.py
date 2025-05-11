@@ -3,11 +3,16 @@ from pydantic import BaseModel
 from typing import List
 from transformers import pipeline
 import spacy
+import os
+import torch
+
+
+os.environ["USE_TF"] = "0"
 
 # Load required models
 nlp = spacy.load("en_core_web_sm")
-disaster_classifier = pipeline("text-classification", model="garynguyen1174/disaster_tweet_bert")
-fake_news_classifier = pipeline("text-classification", model="mrm8488/bert-tiny-finetuned-fake-news-detection")
+disaster_classifier = pipeline("text-classification", model="custom_model/disaster_model", tokenizer="custom_model/disaster_model")
+fake_news_classifier = pipeline("text-classification", model="custom_model/fake_news_model", tokenizer="custom_model/fake_news_model")
 
 # FastAPI app
 app = FastAPI()
@@ -111,7 +116,7 @@ async def analyze_titles(input_data: TitlesInput):
         disaster_result = disaster_classifier(title)[0]
         if disaster_result['label'] == 'LABEL_1':
             credibility_result = fake_news_classifier(title)[0]
-            if credibility_result['label'] == 'real':
+            if credibility_result['label'] == 'LABEL_1':
                 info = extract_disaster_info(title)
                 results.append({
                     "title": title,
