@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request
+from fastapi import FastAPI
 from pydantic import BaseModel
 from typing import List
 from transformers import pipeline
@@ -6,7 +6,7 @@ import spacy
 import os
 import torch
 
-
+# Ensure only PyTorch is used
 os.environ["USE_TF"] = "0"
 
 # Load required models
@@ -21,10 +21,14 @@ app = FastAPI()
 class TitlesInput(BaseModel):
     titles: List[str]
 
-# Core extraction function
-def extract_disaster_info(text):
+def extract_disaster_info(text: str) -> dict:
+    """
+    Extract structured disaster-related information from input text.
+    Returns a dictionary with flags, entities, and other inferred values.
+    """
     doc = nlp(text)
 
+    # Define keyword categories
     realtime_verbs_by_type = {
         "fire": {"spreading", "burning", "engulfing"},
         "flood": {"rising", "overflowing", "submerging"},
@@ -58,64 +62,68 @@ def extract_disaster_info(text):
 
     for token in doc:
         lemma = token.lemma_.lower()
+
         if lemma in urgency_keywords:
             data["urgency"] = True
             data["tags"].append("urgent")
+
         if lemma in disaster_keywords:
             data["disaster_type"] = lemma
             disaster_detected = lemma
+
         if "magnitude" in token.text.lower():
             prev = token.nbor(-1) if token.i > 0 else None
             if prev and prev.like_num:
                 data["magnitude"] = float(prev.text)
+
+        # Improved numeric extraction for killed/injured using dependency patterns
         if lemma in ["kill", "injure"]:
             for child in token.children:
-                if child.dep_ == "dobj":
-                    for subchild in child.children:
-                        if subchild.dep_ == "nummod" and subchild.like_num:
-                            count = int(subchild.text)
-                            if lemma == "kill":
-                                data["killed"] += count
-                            elif lemma == "injure":
-                                data["injured"] += count
+                if child.like_num:
+                    if lemma == "kill":
+                        data["killed"] += int(child.text)
+                    elif lemma == "injure":
+                        data["injured"] += int(child.text)
 
     for token in doc:
         lemma = token.lemma_.lower()
         text_lower = token.text.lower()
         real_time_verbs = realtime_verbs_by_type.get(disaster_detected, set()) | realtime_verbs_by_type["default"]
+
         if token.tag_ == "VBG" and lemma in real_time_verbs:
             data["real_time"] = True
             data["tags"].append("real_time_event")
+
         if text_lower in temporal_markers:
             data["real_time"] = True
             data["tags"].append("real_time_event")
+
         if lemma in help_keywords:
             data["request_for_help"] = True
-            if lemma == "medical":
-                data["tags"].append("medical_help")
-            elif lemma == "rescue":
-                data["tags"].append("rescue_needed")
-            elif lemma == "evacuate":
-                data["tags"].append("evacuation_needed")
-            else:
-                data["tags"].append("help_requested")
+            help_tag_map = {
+                "medical": "medical_help",
+                "rescue": "rescue_needed",
+                "evacuate": "evacuation_needed"
+            }
+            data["tags"].append(help_tag_map.get(lemma, "help_requested"))
 
     for ent in doc.ents:
         if ent.label_ in ["GPE", "LOC"]:
             data["location"].append(ent.text)
-        if ent.label_ in ["FAC", "ORG"] and any(w in ent.text.lower() for w in ["building", "bridge", "hospital", "road"]):
+        elif ent.label_ in ["FAC", "ORG"] and any(w in ent.text.lower() for w in ["building", "bridge", "hospital", "road"]):
             data["infrastructure_damage"].append(ent.text)
 
     return data
 
-# API endpoint
 @app.post("/analyze")
 async def analyze_titles(input_data: TitlesInput):
     results = []
     for title in input_data.titles:
         disaster_result = disaster_classifier(title)[0]
+
         if disaster_result['label'] == 'LABEL_1':
             credibility_result = fake_news_classifier(title)[0]
+
             if credibility_result['label'] == 'LABEL_1':
                 info = extract_disaster_info(title)
                 results.append({
