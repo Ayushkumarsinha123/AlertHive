@@ -4,9 +4,12 @@ const extractTestController = require("./../controllers/test-controller/extract.
 
 const router = express.Router();
 
+const postController = require("../controllers/test-controller/extract.testcontroller");
+
 router
     .route("/")
     .get(extractTestController.getSource, extractTestController.getTestResult)
+    .post(postController.getSource, postController.createPost) 
 
 router
     .route("/xposts-mock")

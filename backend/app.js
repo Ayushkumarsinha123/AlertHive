@@ -9,6 +9,8 @@ const extractTestRouter = require("./routes/extract.testroute")
 const AppError = require("./utils/appError");
 const globalErrorHandler = require("./controllers/errorController");
 
+const mockPostRoutes = require('./routes/extract.testroute.js');
+
 const app = express();
 
 // Middlewares
@@ -22,7 +24,8 @@ app.use("/api/test", extractTestRouter)
 app.use("/api/v1/x-user-top-disaster", userTopDisasterRouter)
 
 // DEFINE your ROUTES here
-
+  app.use("/api/v1/mockpost", mockPostRoutes); /// add post data to database
+  
 // app.all() for all the HTTP methods
 app.all("*", (req, res, next) => {
   // If next() recieves an argument, express will automatically know that there
