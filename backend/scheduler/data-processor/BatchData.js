@@ -21,27 +21,43 @@ class BatchData {
       try {
         let dataArray = await this.fetchData(url);
 
+        // GET DATA FROM ROUTE
         if (url === "http://localhost:8000/twikit-x-cached") {
           dataArray = this.deduplicatePostsFromTwikit(dataArray);
+
+          const extractedTitlesFromDataArray =
+            this.extractFullTextAsTitles(dataArray);
+
+          const titleDetails = await axios.post(
+            "http://127.0.0.1:8000/analyze",
+            extractedTitlesFromDataArray
+          );
 
           parentPort.postMessage({
             event: "DATA_FROM_WORKER",
             data: {
               source: "twikit",
               data: dataArray,
+              titleDetails: titleDetails.data,
             },
           });
-        }
-
-        if (
-          url ===
-          "http://localhost:6010/api/test/xposts-mock?source=${SOURCE_X}"
+        } else if (
+          url === "http://localhost:6010/api/test/xposts-mock?source=x"
         ) {
+          const extractedTitlesFromDataArray =
+            this.extractFullTextAsTitlesXMock(dataArray);
+
+          const titleDetails = await axios.post(
+            "http://127.0.0.1:8000/analyze",
+            extractedTitlesFromDataArray
+          );
+
           parentPort.postMessage({
             event: "DATA_FROM_WORKER",
             data: {
               source: "xposts",
               data: dataArray,
+              titleDetails: titleDetails.data,
             },
           });
         }
@@ -146,6 +162,22 @@ class BatchData {
     }
 
     return result;
+  }
+
+  extractFullTextAsTitles(posts) {
+    const titles = posts
+      .map((post) => post.full_text)
+      .filter((text) => typeof text === "string" && text.trim() !== "");
+
+    return { titles };
+  }
+
+  extractFullTextAsTitlesXMock(posts) {
+    const titles = (posts || [])
+      .map((item) => item.title)
+      .filter((title) => typeof title === "string" && title.trim() !== "");
+
+    return { titles };
   }
 }
 
