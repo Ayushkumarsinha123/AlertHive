@@ -3,3 +3,4 @@ config.env
 extracty/custom_model
 __pycache__
 venv
+cookies.json
