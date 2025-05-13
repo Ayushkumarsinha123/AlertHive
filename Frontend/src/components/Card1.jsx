@@ -1,4 +1,4 @@
-// src/components/Card.jsx
+// src/components/MapSection.jsx
 import React from "react";
 import { CircleDot } from "lucide-react";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
@@ -17,18 +17,20 @@ L.Icon.Default.mergeOptions({
   shadowUrl: markerShadow,
 });
 
-export default function Card({ title }) {
-  const position = [30.0668, 79.0193]; // Uttarakhand
+// 🔄 Reusable Map Component
+export default function MapSection({ title = "Live Location", lat, lng, location = "Uttarakhand" }) {
+  const defaultPosition = [30.0668, 79.0193]; // Default fallback location
+  const position = lat && lng ? [lat, lng] : defaultPosition;
 
   return (
     <div className="bg-white rounded-xl shadow-sm h-full flex flex-col relative overflow-hidden">
-      {/* Live Icon */}
+      {/* LIVE Icon */}
       <div className="absolute top-4 left-4 flex items-center gap-1 text-red-600 text-sm font-semibold z-10">
         <CircleDot className="w-3 h-3 animate-pulse" />
         LIVE
       </div>
 
-      {/* Optional Title */}
+      {/* Title */}
       {title && (
         <h2 className="text-lg font-semibold text-gray-800 mb-2 z-10 pl-4 pt-4">
           {title}
@@ -44,7 +46,7 @@ export default function Card({ title }) {
           />
           <Marker position={position}>
             <Popup>
-              <strong>Uttarakhand</strong><br />
+              <strong>{location}</strong><br />
               Click to view insights.
             </Popup>
           </Marker>
