@@ -8,21 +8,43 @@ class BatchData {
 
   async fetchData(url) {
     const res = await axios.get(url);
-    return res.data?.data?.DATA || [];
+
+    if (res.data?.data?.DATA) return res.data?.data?.DATA;
+
+    if (res.data) return res.data;
+
+    return [];
   }
 
   async processRandomItem(parentPort) {
     const tasks = this.apiList.map(async (url) => {
       try {
-        const finalData = [];
+        let dataArray = await this.fetchData(url);
 
-        const dataArray = await this.fetchData(url);
-        const randomItem =
-          dataArray[Math.floor(Math.random() * dataArray.length)];
+        if (url === "http://localhost:8000/twikit-x-cached") {
+          dataArray = this.deduplicatePostsFromTwikit(dataArray);
 
-        finalData.push(randomItem);
+          parentPort.postMessage({
+            event: "DATA_FROM_WORKER",
+            data: {
+              source: "twikit",
+              data: dataArray,
+            },
+          });
+        }
 
-        parentPort.postMessage({ event: "DATA_FROM_WORKER", data: finalData });
+        if (
+          url ===
+          "http://localhost:6010/api/test/xposts-mock?source=${SOURCE_X}"
+        ) {
+          parentPort.postMessage({
+            event: "DATA_FROM_WORKER",
+            data: {
+              source: "xposts",
+              data: dataArray,
+            },
+          });
+        }
       } catch (err) {
         parentPort.postMessage(`Failed to fetch ${url}: ${err.message}`);
       }
@@ -44,6 +66,86 @@ class BatchData {
     });
 
     await Promise.allSettled(tasks);
+  }
+
+  deduplicatePosts(posts) {
+    const titleContentMap = new Map(); // (title+content) to post
+    const contentMap = new Map(); // content to post ID to detect same content with diff titles
+    const titleGroupMap = new Map(); // title to list of posts with different content
+
+    const result = [];
+
+    for (const post of posts) {
+      const title = (post.title || "").trim();
+      const content = post.content?.trim() ?? null;
+
+      const titleKey = title.toLowerCase();
+      const contentKey = content?.toLowerCase() ?? null;
+      const uniqueKey = `${titleKey}::${contentKey}`;
+
+      // 1. Skip exact duplicates
+      if (titleContentMap.has(uniqueKey)) continue;
+
+      // 2. Remove duplicates by same content (non-null) but different title
+      if (contentKey && contentMap.has(contentKey)) continue;
+
+      // Save to exact duplicate checker
+      titleContentMap.set(uniqueKey, post);
+
+      // Track content used
+      if (contentKey) {
+        contentMap.set(contentKey, post._id);
+      }
+
+      // 3. Group same title with different content
+      if (!titleGroupMap.has(titleKey)) {
+        titleGroupMap.set(titleKey, []);
+      }
+
+      const group = titleGroupMap.get(titleKey);
+
+      // If content differs from what's already in group, push it
+      if (
+        !group.some(
+          (p) => (p.content ?? "").trim().toLowerCase() === contentKey
+        )
+      ) {
+        group.push(post);
+      }
+    }
+
+    // Collect only unique groups
+    for (const group of titleGroupMap.values()) {
+      if (group.length === 1) {
+        result.push(group[0]); // Only one post, just push it
+      } else {
+        result.push(...group); // Same title, different contents
+      }
+    }
+
+    return result;
+  }
+
+  deduplicatePostsFromTwikit(posts) {
+    const seen = new Set();
+    const result = [];
+
+    for (const post of posts) {
+      const fullText = (post.full_text || "").trim();
+
+      // Treat null/empty full_text as unique
+      if (!fullText) {
+        result.push(post);
+        continue;
+      }
+
+      if (!seen.has(fullText)) {
+        seen.add(fullText);
+        result.push(post);
+      }
+    }
+
+    return result;
   }
 }
 
