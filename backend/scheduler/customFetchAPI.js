@@ -15,13 +15,19 @@ const SOURCE_X = "x";
 
 // MOCK APIs FROM WHERE DATA NEEDS TO BE EXTRACTED
 const ROOT = "http://localhost:6010";
+const ROOT_2 = "http://127.0.0.1:8000";
 
 const API_PATHS = [`/api/test/xposts-mock?source=${SOURCE_X}`];
+const API_PATHS_2 = [`/twikit-x-cached`];
 
-// const API_PATHS = ['/api/test?source=x']
+// Merge ROOT with API_PATHS
+const apiList1 = API_PATHS.map((path) => `${ROOT}${path}`);
 
-// Full URLs using ROOT
-const API_LIST = API_PATHS.map((path) => `${ROOT}${path}`);
+// Merge ROOT_2 with API_PATHS_2
+const apiList2 = API_PATHS_2.map((path) => `${ROOT_2}${path}`);
+
+// Combine both into a single list
+const API_LIST = [...apiList1, ...apiList2];
 
 // INTERVAL DURATION
 const INTERVAL = process.env.SCHEDULER_DURATION;
