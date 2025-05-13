@@ -1,82 +1,55 @@
 import { useState } from 'react';
-
 import Navbar from '../components/Navbar';
-import Card from '../components/Card1';
-import Card2 from '../components/Card2';
-import Card3 from '../components/Card3';
-import Card4 from '../components/Card4';
-
+import Map from '../components/Map'; // This should display icons based on incident types
+import AlertFeed from '../components/AlertFeed'; // For right-hand side alert list
+import TopStats from '../components/TopStats'; // New small stat card component
 
 export default function Dashboard() {
-  const [progressStep, setProgressStep] = useState(0);
   const [latestItem, setLatestItem] = useState(null);
 
   return (
-    <div className="min-h-screen bg-gray-500 p-4">
-      {/* Internal Dashboard */}
-      <div className="w-full h-full bg-gray-200 rounded-2xl p-6 shadow-md flex flex-col min-h-[calc(100vh-2rem)]">
-        {/* Top Section (Navbar + Main Content Area) */}
-        <div className="flex flex-col flex-grow min-h-0">
-          <Navbar progressStep={progressStep} />
+    <div className="min-h-screen bg-[#0D1B2A] p-4 text-white">
+      {/* Navbar / Header */}
+      <Navbar />
 
-          {/* Middle Section fills remaining space */}
-          <div className="mt-6 grid grid-cols-12 gap-6 flex-grow min-h-0">
-            {/* LEFT COLUMN */}
-            <div className="col-span-12 md:col-span-6 h-full flex flex-col gap-4">
-              <div className="flex-grow basis-[70%]">
-                <Card title="">
-                  This card takes up 70% height.
-                </Card>
-              </div>
-              <div className="flex-grow basis-[30%]">
-                <Card2 title="Disaster Summary">
-                  <div className="space-y-2" >
-                    <div className="bg-red-100 text-red-700 px-3 py-2 rounded-lg border border-[#ddd]">
-                      <h3 className="text-sm font-semibold">DEATHS</h3>
-                      <p className="text-lg font-bold">
-                        {latestItem?.casualties?.death ?? 0}
-                      </p>
-                    </div>
-                    <div className="bg-yellow-100 text-yellow-800 px-3 py-2 rounded-lg border border-[#ddd]">
-                      <h3 className="text-sm font-semibold">INJURIES</h3>
-                      <p className="text-lg font-bold">
-                        {latestItem?.casualties?.injuries ?? 0}
-                      </p>
-                    </div>
-                  </div>
-                </Card2>
-              </div>
-
-            </div>
-
-            {/* RIGHT COLUMN */}
-            <div className="col-span-12 md:col-span-6 h-full flex flex-col gap-4">
-              <div className="flex-grow basis-[70%]">
-                <Card3 title="Live Feed" onProgress={setProgressStep} onNewItem={setLatestItem}>
-                </Card3>
-              </div>
-              <div className="flex-grow basis-[30%]">
-                <Card4 title="Critical News">
-                  <div className="space-y-3">
-                    <div className="bg-red-100 text-red-900 px-3 py-2 rounded-lg border border-[#ddd]">
-                      <h3 className="text-sm font-semibold">Climate Alert</h3>
-                      <p className="text-sm">
-                        Kentucky faces devastating flooding with <span className="font-bold">8 dead</span> and more than a <span className="font-bold">thousand rescued</span>.
-                      </p>
-                    </div>
-                    <div className="bg-red-100 text-red-900 px-3 py-2 rounded-lg border border-[#ddd]">
-                      <h3 className="text-sm font-semibold">Fire Emergency</h3>
-                      <p className="text-sm">
-                        Massive forest fire broke out in <span className="font-bold">Judean Foothills, Israel</span>.
-                      </p>
-                    </div>
-                  </div>
-                </Card4>
-              </div>
-
-            </div>
+      {/* Top Stats Section */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-4 my-4">
+        <div className="bg-[#1B263B] rounded-xl p-4">
+          <h2 className="text-sm font-semibold">Total Incidents</h2>
+          <p className="text-3xl font-bold">184</p>
+        </div>
+        <div className="bg-[#1B263B] rounded-xl p-4 md:col-span-2">
+          <h2 className="text-sm font-semibold">Disaster Type Breakdown</h2>
+          {/* Placeholder for chart */}
+          <div className="h-16 bg-[#415A77] rounded-md mt-2 flex items-center justify-center">
+            [Chart Placeholder]
           </div>
         </div>
+        <div className="bg-[#1B263B] rounded-xl p-4">
+          <h2 className="text-sm font-semibold">Most Affected Regions</h2>
+          <p className="text-md mt-1">California, Texas</p>
+        </div>
+      </div>
+
+      {/* Map + Feed Section */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+        {/* Map Display */}
+        <div className="md:col-span-2 bg-white rounded-xl overflow-hidden">
+          <Map />
+        </div>
+
+        {/* Alerts Feed */}
+        <div className="bg-[#1B263B] rounded-xl p-4">
+          <h3 className="text-lg font-semibold mb-2">Live Alerts</h3>
+          <AlertFeed />
+        </div>
+      </div>
+
+      {/* Bottom Stats Cards */}
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+        <TopStats title="Medical / Rescue Requests" value={53} />
+        <TopStats title="Infrastructure Damage" value={28} />
+        <TopStats title="People Affected" value={75} />
       </div>
     </div>
   );
