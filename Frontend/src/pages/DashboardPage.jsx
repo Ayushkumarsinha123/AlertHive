@@ -5,6 +5,7 @@ import AlertFeed from "../components/AlertFeed";
 import TopStats from "../components/TopStats";
 import { Activity, PieChart, MapPin } from "lucide-react";
 import { Bell } from "lucide-react";
+import { useWebSocket } from "../contexts/WebSocketContext";
 
 export default function Dashboard() {
   const [latestItem, setLatestItem] = useState(null);
@@ -41,10 +42,21 @@ export default function Dashboard() {
               </div>
               <div className="flex-1">
                 <p className="text-xs uppercase tracking-wider text-gray-400">
-                  Disaster Breakdown
+                  Urgency Level Overview
                 </p>
-                <div className="h-6 bg-[#415A77] rounded mt-1 flex items-center justify-center text-[10px]">
-                  [Chart Placeholder]
+                <div className="grid grid-cols-3 gap-2 mt-2 text-center text-xs text-white">
+                  <div className="bg-[#1C3A5D] rounded p-2">
+                    <p className="font-bold text-yellow-300">Low</p>
+                    <p>42%</p>
+                  </div>
+                  <div className="bg-[#1C3A5D] rounded p-2">
+                    <p className="font-bold text-orange-300">Medium</p>
+                    <p>37%</p>
+                  </div>
+                  <div className="bg-[#1C3A5D] rounded p-2">
+                    <p className="font-bold text-red-400">High</p>
+                    <p>21%</p>
+                  </div>
                 </div>
               </div>
             </div>
