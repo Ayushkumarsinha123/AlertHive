@@ -549,3 +549,7 @@ async def get_tweets(
         })
 
     return result
+
+@app.get("/twikit-x-cached")
+async def get_tweets_cached():
+    return RESULT
