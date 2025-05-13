@@ -1,32 +1,26 @@
-export default function Navbar({ progressStep = 0 }) {
-  const steps = ["Fetching", "Fetched", "Displayed"];
+import { FaSearch } from "react-icons/fa";
 
+export default function Navbar() {
   return (
-    <nav className="w-full bg-gray-100 px-6 py-3 flex justify-center rounded-xl">
-      <div className="flex items-center gap-0 relative max-w-md w-full justify-between px-4">
-        {steps.map((label, index) => (
-          <div key={index} className="flex flex-col items-center relative z-10 w-1/3">
-            {/* Circle */}
-            <div className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm
-              ${index === progressStep ? 'bg-blue-500 text-white shadow-lg' : 'bg-white border border-gray-400'}
-              transition duration-300 ease-in-out`}>
-              {index + 1}
-            </div>
-            {/* Label */}
-            <span className="mt-1 text-xs text-gray-700 text-center">{label}</span>
-          </div>
-        ))}
-
-        {/* Line */}
-        <div className="absolute top-5 left-8 right-8 h-1 bg-gray-300 z-0">
-          <div
-            className="h-full bg-blue-500 transition-all duration-700 ease-in-out"
-            style={{
-              width: `${(progressStep / (steps.length - 1)) * 100}%`,
-            }}
-          ></div>
-        </div>
+    <div className="bg-[#0B1C3B] text-white px-6 py-4 rounded-t-2xl flex justify-between items-center">
+      {/* Logo and Title */}
+      <div className="flex items-center space-x-3">
+        <div className="bg-blue-600 rounded-full w-8 h-8 flex items-center justify-center text-white text-lg font-bold">C</div>
+        <h1 className="text-xl font-semibold">Cisaster Response Dashboard</h1>
       </div>
-    </nav>
+
+      {/* Search and Profile */}
+      <div className="flex items-center space-x-4">
+        <div className="relative">
+          <input
+            type="text"
+            placeholder="Search"
+            className="bg-[#10294F] text-white px-4 py-2 rounded-full pl-10 text-sm placeholder-gray-300"
+          />
+          <FaSearch className="absolute left-3 top-2.5 text-gray-300" />
+        </div>
+        <div className="w-8 h-8 rounded-full bg-gray-400" />
+      </div>
+    </div>
   );
 }
