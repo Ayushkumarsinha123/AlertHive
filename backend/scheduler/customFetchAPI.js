@@ -15,7 +15,7 @@ const SOURCE_X = "x";
 
 // MOCK APIs FROM WHERE DATA NEEDS TO BE EXTRACTED
 const ROOT = "http://localhost:6010";
-const ROOT_2 = "http://127.0.0.1:8000";
+const ROOT_2 = "http://localhost:8000";
 
 const API_PATHS = [`/api/test/xposts-mock?source=${SOURCE_X}`];
 const API_PATHS_2 = [`/twikit-x-cached`];
@@ -47,11 +47,8 @@ function runWorker() {
       const clients = getClients();
 
       const PAYLOAD = {
-        event: "X_NEWS",
         data: msg.data,
       };
-
-      console.log(PAYLOAD);
 
       broadcastToClients(clients, WebSocket, PAYLOAD);
     }
