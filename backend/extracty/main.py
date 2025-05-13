@@ -1,4 +1,7 @@
 from fastapi import FastAPI, HTTPException, Query
+from fastapi.responses import JSONResponse
+from fastapi.middleware.cors import CORSMiddleware
+
 from pydantic import BaseModel
 from typing import List
 
@@ -21,8 +24,16 @@ fake_news_classifier = pipeline("text-classification", model="custom_model/fake_
 # FastAPI app
 app = FastAPI()
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Or restrict to your Node server origin
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # RESULT
-RESULT = [
+app.state._RESULT = [
     {
         "id": "1922271817307148711",
         "user": "Matere™",
@@ -552,4 +563,4 @@ async def get_tweets(
 
 @app.get("/twikit-x-cached")
 async def get_tweets_cached():
-    return RESULT
+    return JSONResponse(content=app.state._RESULT)
